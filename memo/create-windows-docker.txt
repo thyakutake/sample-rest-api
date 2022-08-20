@@ -1,0 +1,65 @@
+create docker container
+---
+docker run ^
+   --name postgre-sample-database ^
+   --privileged ^
+   -p 5432:5432 ^
+   -e POSTGRES_PASSWORD=root_password@root ^
+   -d -it postgres:13.7
+--------------------------------------------------------
+login database
+---
+docker exec -it  postgre-sample-database  bash
+
+psql -Upostgres
+
+--------------------------------------------------------
+create database
+---
+postgres=# create database test_tasks;
+
+--------------------------------------------------------
+list database
+---
+postgres=# \l
+                                 List of databases
+    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
+------------+----------+----------+------------+------------+-----------------------
+ postgres   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+ template0  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+            |          |          |            |            | postgres=CTc/postgres
+ template1  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+            |          |          |            |            | postgres=CTc/postgres
+ test_tasks | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+(4 rows)
+
+--------------------------------------------------------
+move to database
+---
+
+postgres=# /c test_tasks
+
+--------------------------------------------------------
+create table
+---
+postgres=#
+create table taskitems
+(id varchar(100) primary key,
+task varchar(100),
+deadline varchar(100),
+done boolean);
+
+--------------------------------------------------------
+list table
+---
+postgres=# \d
+           List of relations
+ Schema |   Name    | Type  |  Owner
+--------+-----------+-------+----------
+ public | taskitems | table | postgres
+(1 row)
+
+
+
+
+
